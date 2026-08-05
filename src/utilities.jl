@@ -1,5 +1,5 @@
 module Utilities
-using LinearAlgebra, Statistics, NPZ, OrderedCollections, Interpolations, MAT
+using LinearAlgebra, Statistics, OrderedCollections, Interpolations
 
 export Bunch, complex_interp, loadbunch, convert_unicode_arrays, Opt, ScalarCoef, VectorCoef, ReconstructOutput
 
@@ -287,7 +287,7 @@ function loadbunch(fname; masked=true)
     if endswith(fname, ".mat")
         xx = matread(fname)
     elseif endswith(fname, ".npz")
-        xx = npzread(fname)
+        #xx = npzread(fname)
     else
         error("Unrecognized file $fname")
     end
