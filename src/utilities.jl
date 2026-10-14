@@ -1,7 +1,7 @@
 module Utilities
 using LinearAlgebra, Statistics, OrderedCollections, Interpolations
 
-export Bunch, complex_interp, loadbunch, convert_unicode_arrays, Opt, ScalarCoef, VectorCoef, ReconstructOutput
+export Bunch, complex_interp, loadbunch, convert_unicode_arrays, Opt, ScalarCoef, VectorCoef, ReconstructOutput, makelind
 
 mutable struct Opt
     constfolder::String
@@ -317,4 +317,23 @@ function convert_unicode_arrays(b::Bunch)
     end
     return out
 end
+
+function makelind(coefNames,cstNames)
+        #Fill-in lind array based on Coef.name.
+        # constt,sat,shallow=load_Constants(opt.constfolder);
+
+        newlind=zeros(Int64,length(coefNames));
+        for n=1:length(coefNames)
+            index=findfirst(strip(coefNames[n]).==cstNames)
+            if index==nothing
+                newlind[n]=1;
+            else
+                newlind[n]=index;
+            end
+
+        end
+        return newlind;
+
+    end
+
 end # module
