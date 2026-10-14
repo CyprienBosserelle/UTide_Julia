@@ -30,4 +30,27 @@ using Statistics
         @test sqrt(mean(abs2, tide.u .- u)) < 0.05
         @test sqrt(mean(abs2, tide.v .- v)) < 0.05
     end
+
+    @testset "makelind" begin
+        m2_idx = UTide.UtConstants.constit_index_dict["M2"]
+        s2_idx = UTide.UtConstants.constit_index_dict["S2"]
+        k1_idx = UTide.UtConstants.constit_index_dict["K1"]
+
+        lind1 = makelind(["M2", "S2", "K1"])
+        @test lind1 isa Vector{Int}
+        @test lind1 == [m2_idx, s2_idx, k1_idx]
+
+        # Whitespace stripping and case insensitivity
+        lind2 = makelind([" m2 ", "s2\t", "k1"])
+        @test lind2 == [m2_idx, s2_idx, k1_idx]
+
+        # Unknown constituent names return 0
+        lind3 = makelind(["M2", "NON_EXISTENT_CNSTIT", "S2"])
+        @test lind3 == [m2_idx, 0, s2_idx]
+
+        # Custom reference list
+        custom_ref = [" Alpha ", "BETA", "Gamma"]
+        lind4 = makelind(["alpha", "gamma", "UNKNOWN"], custom_ref)
+        @test lind4 == [1, 3, 0]
+    end
 end
