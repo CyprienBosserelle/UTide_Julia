@@ -2,7 +2,7 @@ module Interoperability
 using ..Utilities, ..TimeConversion
 
 export getFEScoef
-using NetCDF
+using NetCDF,Dates
 function getFEScoef(lon,lat;FESdatafolder = "./data/ocean_tide_extrapolated/")
 	
     println("Check Constituents")
