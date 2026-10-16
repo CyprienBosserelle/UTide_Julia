@@ -4,13 +4,13 @@ export reconstruct
 
 using Dates
 
-function reconstruct(t::Vector{TimeType},coef; kargs...)
+function reconstruct(t::AbstractVector{<:TimeType}Vector{TimeType},coef; kargs...)
     tf=date2num.(t)
     return reconstruct(tf, coef;  kargs...)
     
 end
 
-function reconstruct(t::TimeType,coef; kargs...)
+function reconstruct(t<:TimeType,coef; kargs...)
     tf=date2num(t)
     
     return reconstruct([tf tf], coef;  kargs...)
@@ -18,7 +18,7 @@ end
 
 
 
-function reconstruct(t::Vector{AbstractFloat}, coef; epoch=nothing, verbose=true, constit=nothing, min_SNR=2.0, min_PE=0., fulloutput=false)
+function reconstruct(v::AbstractVector{<:AbstractFloat}, coef; epoch=nothing, verbose=true, constit=nothing, min_SNR=2.0, min_PE=0., fulloutput=false)
     t_norm = normalize_time(t, epoch)
     t_mpl = t_norm
     goodmask = .!isnan.(t_norm)
