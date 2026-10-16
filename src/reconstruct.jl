@@ -4,7 +4,7 @@ export reconstruct
 
 using Dates
 
-function reconstruct(t::AbstractVector{<:TimeType}Vector{TimeType},coef; kargs...)
+function reconstruct(t::AbstractVector{<:TimeType},coef; kargs...)
     tf=date2num.(t)
     return reconstruct(tf, coef;  kargs...)
     
