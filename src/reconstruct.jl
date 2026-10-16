@@ -42,17 +42,33 @@ function _reconstruct_inner(t, goodmask, coef, verbose, constit, min_SNR, min_PE
     if twodim
         ap = 0.5 .* ((coef.Lsmaj[ind] .+ coef.Lsmin[ind]) .* exp.(1im .* (coef.theta[ind] .- coef.g[ind]) .* rpd))
         am = 0.5 .* ((coef.Lsmaj[ind] .- coef.Lsmin[ind]) .* exp.(1im .* (coef.theta[ind] .+ coef.g[ind]) .* rpd))
-    else ap = 0.5 .* coef.A[ind] .* exp.(-1im .* coef.g[ind] .* rpd); am = conj.(ap) end
+    else 
+        ap = 0.5 .* coef.A[ind] .* exp.(-1im .* coef.g[ind] .* rpd);
+         am = conj.(ap)
+    end
     ngflgs = [coef.aux.opt.nodsatlint, coef.aux.opt.nodsatnone, coef.aux.opt.gwchlint, coef.aux.opt.gwchnone]
+
     if verbose print("prep/calcs ... ") end
+
     E_mat = ut_E(t, coef.aux.reftime, coef.aux.frq[ind], coef.aux.lind[ind], coef.aux.lat, ngflgs, nothing)
     fit = E_mat * ap .+ conj.(E_mat) * am
-    u, trend = fill(NaN, size(goodmask)), !coef.aux.opt.notrend
+    u= fill(NaN, size(goodmask))
+    trend = !coef.aux.opt.notrend
     local v = nothing
     if twodim
-        v = fill(NaN, size(goodmask)); u[goodmask], v[goodmask] = real(fit) .+ coef.umean, imag(fit) .+ coef.vmean
-        if trend u[goodmask] .+= coef.uslope .* (t .- coef.aux.reftime); v[goodmask] .+= coef.vslope .* (t .- coef.aux.reftime) end
-    else u[goodmask] = real(fit) .+ coef.mean; if trend u[goodmask] .+= coef.slope .* (t .- coef.aux.reftime) end end
+        v = fill(NaN, size(goodmask));
+        u[goodmask]= real(fit) .+ coef.umean
+        v[goodmask] = imag(fit) .+ coef.vmean
+        if trend
+            u[goodmask] .+= coef.uslope .* (t .- coef.aux.reftime);
+            v[goodmask] .+= coef.vslope .* (t .- coef.aux.reftime);
+        end
+    else
+        u[goodmask] = real(fit) .+ coef.mean;
+        if trend
+            u[goodmask] .+= coef.slope .* (t .- coef.aux.reftime)
+        end
+    end
     if verbose println("done.") end
     return u, v
 end
