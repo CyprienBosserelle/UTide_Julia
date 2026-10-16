@@ -1,6 +1,9 @@
+module Interoperability
+using ..Utilities, ..TimeConversion
 
+export getFEScoef
 using NetCDF
-function get_constituentsFES(lon,lat;FESdatafolder = "./data/ocean_tide_extrapolated/")
+function getFEScoef(lon,lat;FESdatafolder = "./data/ocean_tide_extrapolated/")
 	
     println("Check Constituents")
 	#constituents=ncread(tidemodel,"parameters",start=[1,nodeidx],count=[-1,1]);
@@ -67,4 +70,5 @@ function get_constituentsFES(lon,lat;FESdatafolder = "./data/ocean_tide_extrapol
 	
 
 	return FEScoef
+end
 end

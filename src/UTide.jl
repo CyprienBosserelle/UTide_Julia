@@ -12,7 +12,8 @@ include("diagnostics.jl")
 include("confidence.jl")
 include("solve.jl")
 include("reconstruct.jl")
-using .Solve, .Reconstruct, .UtConstants
+include("interop.jl")
+using .Solve, .Reconstruct, .UtConstants, .Interoperability
 using .Utilities: Opt, ScalarCoef, VectorCoef, ReconstructOutput, makelind
-export solve, reconstruct, ut_constants, Opt, ScalarCoef, VectorCoef, ReconstructOutput, makelind
+export solve, reconstruct, ut_constants, Opt, ScalarCoef, VectorCoef, ReconstructOutput, makelind, getFEScoef
 end # module
