@@ -1,7 +1,13 @@
 module Reconstruct
 using ..Utilities, ..TimeConversion, ..Harmonics, LinearAlgebra
 export reconstruct
-function reconstruct(t, coef; epoch=nothing, verbose=true, constit=nothing, min_SNR=2.0, min_PE=0.0)
+
+function reconstruct(t::TimeType,coef; kargs...)
+    tf=datenum.(t)
+    reconstruct(tf, coef;  kargs...)
+end
+
+function reconstruct(t::AbstractFloat, coef; epoch=nothing, verbose=true, constit=nothing, min_SNR=2.0, min_PE=0.0)
     t_norm = normalize_time(t, epoch)
     t_mpl = t_norm
     goodmask = .!isnan.(t_norm)
