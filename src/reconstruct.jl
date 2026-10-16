@@ -4,18 +4,32 @@ export reconstruct
 
 using Dates
 
-function reconstruct(t::TimeType,coef; kargs...)
+function reconstruct(t::Vector{TimeType},coef; kargs...)
     tf=date2num.(t)
-    reconstruct(tf, coef;  kargs...)
+    t,h = reconstruct(tf, coef;  kargs...)
+
+    return h
+
+    
+
+    
 end
 
-function reconstruct(t::AbstractFloat, coef; epoch=nothing, verbose=true, constit=nothing, min_SNR=2.0, min_PE=0.0)
+function reconstruct(t::TimeType,coef; kargs...)
+    tf=date2num(t)
+    
+    return reconstruct([tf tf], coef;  kargs...)
+end
+
+
+
+function reconstruct(t::Vector{AbstractFloat}, coef; epoch=nothing, verbose=true, constit=nothing, min_SNR=2.0, min_PE=0., fulloutput=false)
     t_norm = normalize_time(t, epoch)
     t_mpl = t_norm
     goodmask = .!isnan.(t_norm)
     t_comp = t_norm[goodmask]
     u, v = _reconstruct_inner(t_comp, goodmask, coef, verbose, constit, min_SNR, min_PE)
-
+    if fulloutput
     return ReconstructOutput(
         t_in = t,
         epoch = epoch,
@@ -27,6 +41,9 @@ function reconstruct(t::AbstractFloat, coef; epoch=nothing, verbose=true, consti
         u = !isnothing(v) ? u : nothing,
         v = v
     )
+    else 
+        return h 
+    end
 end
 function _reconstruct_inner(t, goodmask, coef, verbose, constit, min_SNR, min_PE)
     twodim = coef.aux.opt.twodim
