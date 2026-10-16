@@ -1,6 +1,6 @@
 module TimeConversion
 using Dates
-export normalize_time
+export normalize_time,date2num
 const DAY_TO_GREGORIAN_EPOCH = 719163
 function date2num(date::DateTime)
     return (Dates.value(date) - Dates.value(DateTime(1970, 1, 1))) / (24 * 60 * 60 * 1000)
