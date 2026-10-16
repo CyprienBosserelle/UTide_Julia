@@ -1,8 +1,8 @@
 module UTide
+include("ut_constants.jl")
 include("utilities.jl")
 include("time_conversion.jl")
 include("astronomy.jl")
-include("ut_constants.jl")
 include("harmonics.jl")
 include("ellipse_params.jl")
 include("robustfit.jl")
@@ -13,6 +13,6 @@ include("confidence.jl")
 include("solve.jl")
 include("reconstruct.jl")
 using .Solve, .Reconstruct, .UtConstants
-using .Utilities: Opt, ScalarCoef, VectorCoef, ReconstructOutput
-export solve, reconstruct, ut_constants, Opt, ScalarCoef, VectorCoef, ReconstructOutput
+using .Utilities: Opt, ScalarCoef, VectorCoef, ReconstructOutput, makelind
+export solve, reconstruct, ut_constants, Opt, ScalarCoef, VectorCoef, ReconstructOutput, makelind
 end # module

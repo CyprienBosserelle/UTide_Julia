@@ -1,5 +1,6 @@
 module Utilities
 using LinearAlgebra, Statistics, OrderedCollections, Interpolations
+import ..UtConstants
 
 export Bunch, complex_interp, loadbunch, convert_unicode_arrays, Opt, ScalarCoef, VectorCoef, ReconstructOutput, makelind
 
@@ -318,22 +319,15 @@ function convert_unicode_arrays(b::Bunch)
     return out
 end
 
-function makelind(coefNames,cstNames)
-        #Fill-in lind array based on Coef.name.
-        # constt,sat,shallow=load_Constants(opt.constfolder);
-
-        newlind=zeros(Int64,length(coefNames));
-        for n=1:length(coefNames)
-            index=findfirst(strip(coefNames[n]).==cstNames)
-            if index==nothing
-                newlind[n]=1;
-            else
-                newlind[n]=index;
-            end
-
-        end
-        return newlind;
-
+function makelind(coefNames::AbstractVector, cstNames::AbstractVector=UtConstants.constit_names)
+    newlind = zeros(Int, length(coefNames))
+    cst_clean = [uppercase(strip(string(c))) for c in cstNames]
+    cst_dict = Dict{String, Int}(cst_clean[i] => i for i in 1:length(cst_clean))
+    for (n, name) in enumerate(coefNames)
+        clean_name = uppercase(strip(string(name)))
+        newlind[n] = get(cst_dict, clean_name, 0)
     end
+    return newlind
+end
 
 end # module
