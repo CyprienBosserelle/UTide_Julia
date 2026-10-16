@@ -10,6 +10,16 @@ function get_constituentsFES(lon,lat;FESdatafolder = "./data/ocean_tide_extrapol
     cstnames=first.(split.(cstfiles,".nc"));
     cstnamesU=uppercase.(cstnames);
 
+    ## Remap 3 cost name to UTide convention
+    inla=cstnamesU.=="LA2"
+    cstnamesU[inla] .= "LDA2"
+    inrm=findall((cstnamesU.=="MSQM") .|| (cstnamesU.=="MTM"))
+
+    deleteat!(cstnames, inrm)
+    deleteat!(cstnamesU, inrm)
+
+
+
     cstfreq=zeros(length(cstnames));
     cstlind=zeros(length(cstnames));
     # Build database of freq and lind for those constituents
@@ -48,11 +58,11 @@ function get_constituentsFES(lon,lat;FESdatafolder = "./data/ocean_tide_extrapol
     
 
 
-
     lind=makelind(cstnamesU)
+   
 
 	
-	FEScoef=UTide.ScalarCoef(name=cstnamesU,A=cstA,A_ci=emptyval,g=cstg,g_ci=emptyval,freq=cstfreq,lind=lind,mean=0.0,slope=0.0,lat=lat,reftime=DateTime(2000,1,1))
+	FEScoef=UTide.ScalarCoef(name=cstnamesU,A=cstA,A_ci=emptyval,g=cstg,g_ci=emptyval,freq=cstfreq,lind=lind,mean=0.0,slope=0.0,lat=lat,reftime=date2num(DateTime(2000,1,1)))
 
 	
 
