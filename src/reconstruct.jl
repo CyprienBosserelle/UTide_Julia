@@ -37,7 +37,11 @@ function reconstruct(t::AbstractVector{<:AbstractFloat}, coef; epoch=nothing, ve
     #     v = v
     # )
     # else 
+    if isnothing(v) ?
+        return u
+    else
         return u,v
+    end
     # end
 end
 function _reconstruct_inner(t, goodmask, coef, verbose, constit, min_SNR, min_PE)
