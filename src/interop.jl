@@ -65,7 +65,7 @@ function getFEScoef(lon,lat;FESdatafolder = "./data/ocean_tide_extrapolated/")
    
 
 	
-	FEScoef=UTide.ScalarCoef(name=cstnamesU,A=cstA,A_ci=emptyval,g=cstg,g_ci=emptyval,freq=cstfreq,lind=lind,mean=0.0,slope=0.0,lat=lat,reftime=date2num(DateTime(2000,1,1)))
+	FEScoef=ScalarCoef(name=cstnamesU,A=cstA,A_ci=emptyval,g=cstg,g_ci=emptyval,freq=cstfreq,lind=lind,mean=0.0,slope=0.0,lat=lat,reftime=date2num(DateTime(2000,1,1)))
 
 	
 
