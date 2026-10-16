@@ -24,21 +24,21 @@ function reconstruct(v::AbstractVector{<:AbstractFloat}, coef; epoch=nothing, ve
     goodmask = .!isnan.(t_norm)
     t_comp = t_norm[goodmask]
     u, v = _reconstruct_inner(t_comp, goodmask, coef, verbose, constit, min_SNR, min_PE)
-    if fulloutput
-    return ReconstructOutput(
-        t_in = t,
-        epoch = epoch,
-        constit = constit,
-        min_SNR = min_SNR,
-        min_PE = min_PE,
-        t_mpl = t_mpl,
-        h = isnothing(v) ? u : nothing,
-        u = !isnothing(v) ? u : nothing,
-        v = v
-    )
-    else 
-        return h 
-    end
+    # if fulloutput
+    # return ReconstructOutput(
+    #     t_in = t,
+    #     epoch = epoch,
+    #     constit = constit,
+    #     min_SNR = min_SNR,
+    #     min_PE = min_PE,
+    #     t_mpl = t_mpl,
+    #     h = isnothing(v) ? u : nothing,
+    #     u = !isnothing(v) ? u : nothing,
+    #     v = v
+    # )
+    # else 
+        return u,v
+    # end
 end
 function _reconstruct_inner(t, goodmask, coef, verbose, constit, min_SNR, min_PE)
     twodim = coef.aux.opt.twodim
