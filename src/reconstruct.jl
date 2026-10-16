@@ -37,7 +37,7 @@ function reconstruct(t::AbstractVector{<:AbstractFloat}, coef; epoch=nothing, ve
     #     v = v
     # )
     # else 
-    if isnothing(v) ?
+    if isnothing(v)
         return u
     else
         return u,v
