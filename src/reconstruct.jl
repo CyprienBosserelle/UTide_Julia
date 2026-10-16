@@ -4,13 +4,13 @@ export reconstruct
 
 using Dates
 
-function reconstruct(t::AbstractVector{<:TimeType},coef; kargs...)
+function reconstruct(t::AbstractVector{-:TimeType},coef; kargs...)
     tf=date2num.(t)
     return reconstruct(tf, coef;  kargs...)
     
 end
 
-function reconstruct(t<:TimeType,coef; kargs...)
+function reconstruct(t::TimeType,coef; kargs...)
     tf=date2num(t)
     
     return reconstruct([tf tf], coef;  kargs...)
