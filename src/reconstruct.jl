@@ -6,12 +6,7 @@ using Dates
 
 function reconstruct(t::Vector{TimeType},coef; kargs...)
     tf=date2num.(t)
-    t,h = reconstruct(tf, coef;  kargs...)
-
-    return h
-
-    
-
+    return reconstruct(tf, coef;  kargs...)
     
 end
 
