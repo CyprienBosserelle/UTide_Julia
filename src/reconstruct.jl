@@ -2,8 +2,10 @@ module Reconstruct
 using ..Utilities, ..TimeConversion, ..Harmonics, LinearAlgebra
 export reconstruct
 
+using Dates
+
 function reconstruct(t::TimeType,coef; kargs...)
-    tf=datenum.(t)
+    tf=date2num.(t)
     reconstruct(tf, coef;  kargs...)
 end
 
