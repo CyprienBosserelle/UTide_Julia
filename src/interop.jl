@@ -4,6 +4,8 @@ using ..Utilities, ..TimeConversion
 export getFEScoef
 using NetCDF,Dates
 function getFEScoef(lon,lat;FESdatafolder = "./data/ocean_tide_extrapolated/")
+
+    lon = lon >= 0 ? lon : 360+lon; 
 	
     println("Check Constituents")
 	#constituents=ncread(tidemodel,"parameters",start=[1,nodeidx],count=[-1,1]);
